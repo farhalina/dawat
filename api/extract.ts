@@ -20,12 +20,18 @@ export default async function handler(req: any, res: any) {
       messages: [
         {
           role: 'user',
-          content: `You are an ingredient extractor for a grocery shopping app. Read the recipe below and extract every ingredient with its quantity and unit.
+          content: `Extract every ingredient from this recipe with quantity and unit.
 
-Respond with ONLY a JSON array, no other text. Each item should have this shape:
-{ "name": "chicken thighs", "quantity": 1.5, "unit": "lb" }
+Output ONLY a JSON array. No markdown fences, no explanation, no preamble. Start your response with [ and end with ].
 
-If a quantity isn't given, use null. If a unit isn't given (e.g. "2 onions"), use null. Use lowercase for ingredient names. Strip out brand names and adjectives like "fresh" or "organic" — just the core ingredient. Combine duplicates if the same ingredient appears more than once.
+Each item shape: { "name": "chicken thighs", "quantity": 1.5, "unit": "lb" }
+
+Rules:
+- If quantity isn't given, use null
+- If unit isn't given (e.g. "2 onions"), use null
+- Lowercase ingredient names
+- Strip brand names and adjectives like "fresh" or "organic"
+- Combine duplicates
 
 Recipe:
 ${recipe}`
@@ -38,9 +44,20 @@ ${recipe}`
       return res.status(500).json({ error: 'No text response from Claude' });
     }
 
+    let raw = textBlock.text.trim();
+
+    // Strip markdown code fences if Claude added them
+    raw = raw.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '');
+
+    // Try to extract JSON array if Claude wrapped it in prose
+    const arrayMatch = raw.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      raw = arrayMatch[0];
+    }
+
     let ingredients;
     try {
-      ingredients = JSON.parse(textBlock.text);
+      ingredients = JSON.parse(raw);
     } catch (e) {
       return res.status(500).json({
         error: 'Could not parse ingredients',
