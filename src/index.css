@@ -1,19 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #1a1714;
-  --color-surface: #25201c;
-  --color-surface-2: #2f2924;
-  --color-border: #3a322c;
-  --color-text: #f5ede0;
-  --color-text-muted: #a39788;
-  --color-text-faint: #6b6259;
-  --color-accent: #d85a30;
-  --color-accent-hover: #c04d28;
-  --color-success: #5fb88a;
-  --color-success-bg: #1f3329;
-  --color-error: #f5b8b8;
-  --color-error-bg: #3a1f1f;
+  /* Warm paper palette */
+  --color-bg: #faf6ef;
+  --color-surface: #ffffff;
+  --color-surface-2: #f3ede1;
+  --color-border: #e8dfd0;
+  --color-border-soft: #f0e8d8;
+
+  /* Ink */
+  --color-text: #2a2018;
+  --color-text-muted: #6b5d50;
+  --color-text-faint: #9a8a78;
+
+  /* Accents */
+  --color-accent: #c8501f;
+  --color-accent-hover: #a8401a;
+  --color-accent-soft: #fbe8db;
+
+  /* Success / warning */
+  --color-success: #4a7c4f;
+  --color-success-bg: #e8f0e0;
+  --color-success-soft: #5a8a5f;
+
+  /* Error */
+  --color-error: #8b2929;
+  --color-error-bg: #fbe5e5;
+
+  /* Highlight */
+  --color-highlight-bg: #ede5f2;
+  --color-highlight-border: #d4c4dc;
+  --color-highlight-text: #5a3d6b;
+  --color-highlight-muted: #7a5d8b;
 
   --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
